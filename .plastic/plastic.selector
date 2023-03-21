@@ -1,4 +1,0 @@
-repository "2DAdventure@chamelz@cloud.cn"
-  path "/"
-    smartbranch "/main" 
-     

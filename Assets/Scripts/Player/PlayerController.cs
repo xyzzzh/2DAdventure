@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public PlayerInputControl inputControl;
+    public PhysicsCheck physicsCheck;
     public Vector2 inputDirection;
     private Rigidbody2D rb;
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        physicsCheck = GetComponent<PhysicsCheck>();
         inputControl = new PlayerInputControl();
 
         // ×¢²áº¯Êý£º+=
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void jump(InputAction.CallbackContext obj)
     {
-        rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        if(physicsCheck.isGround)
+            rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 }

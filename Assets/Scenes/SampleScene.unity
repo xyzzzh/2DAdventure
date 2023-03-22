@@ -1259,6 +1259,7 @@ GameObject:
   - component: {fileID: 1033855984}
   - component: {fileID: 1033855985}
   - component: {fileID: 1033855986}
+  - component: {fileID: 1033855987}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1349,7 +1350,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 673d5cd3f5fdf88449700690644be0ec, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1407,9 +1408,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d10582bee1fd4439c27c16a846a8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsCheck: {fileID: 0}
   inputDirection: {x: 0, y: 0}
   speed: 200
   jumpForce: 16.5
+--- !u!114 &1033855987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1033855981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e8dc4536c796c43b1af0c654fb4f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomOffset: {x: 0, y: 0}
+  checkRaduis: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  isGround: 0
 --- !u!1 &1195713294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,7 +1444,7 @@ GameObject:
   - component: {fileID: 1195713300}
   - component: {fileID: 1195713299}
   - component: {fileID: 1195713298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

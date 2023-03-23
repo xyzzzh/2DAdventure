@@ -14,16 +14,17 @@ public class PlayerController : MonoBehaviour
     [Header("Basic Params")]
     public float speed;
     public float jumpForce;
+    public bool isCrouch;
     
 
-    //Æô¶¯Ë³Ðò£ºAwake()->OnEnable()->Start()
+    //ï¿½ï¿½ï¿½Ë³ï¿½ï¿½Awake()->OnEnable()->Start()
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         physicsCheck = GetComponent<PhysicsCheck>();
         inputControl = new PlayerInputControl();
 
-        // ×¢²áº¯Êý£º+=
+        // ×¢ï¿½áº¯ï¿½ï¿½ï¿½ï¿½+=
         inputControl.GamePlay.Jump.started += jump;
     }
 
@@ -57,13 +58,23 @@ public class PlayerController : MonoBehaviour
     public void Move()
     {
         rb.velocity = new Vector2(inputDirection.x * speed * Time.deltaTime, rb.velocity.y);
-        // ·­×ªÈËÎï
+        // ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½
         int faceDir = (int)transform.localScale.x;
 
         if (inputDirection.x > 0) faceDir = 1;
         if (inputDirection.x < 0) faceDir = -1;
 
         transform.localScale = new Vector3(faceDir, 1, 1);
+
+        isCrouch = (inputDirection.y < -0.5f) && physicsCheck.isGround;
+        if (isCrouch)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
     private void jump(InputAction.CallbackContext obj)

@@ -6,11 +6,13 @@ public class PlayerAnimation : MonoBehaviour
 {
     private Animator anim;
     private Rigidbody2D rb;
+    private PhysicsCheck physicsCheck;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        physicsCheck = GetComponent<PhysicsCheck>();
     }
     // Start is called before the first frame update
     void Start()
@@ -27,5 +29,7 @@ public class PlayerAnimation : MonoBehaviour
     public void SetAnimation()
     {
         anim.SetFloat("velocityX", Mathf.Abs(rb.velocity.x));
+        anim.SetFloat("velocityY", rb.velocity.y);
+        anim.SetBool("isGround", physicsCheck.isGround);
     }
 }

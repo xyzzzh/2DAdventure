@@ -17,7 +17,6 @@ public class PhysicsCheck : MonoBehaviour
 
     private void Check()
     {
-        //ºÏ≤‚µÿ√Ê
         isGround = Physics2D.OverlapCircle((Vector2)transform.position+bottomOffset, checkRaduis, groundLayer);
     }
 

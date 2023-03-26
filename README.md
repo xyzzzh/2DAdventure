@@ -2,3 +2,11 @@
 Ref: https://learn.u3d.cn/tutorial/2DAdventure
 
 2023.3.21：完成人物移动、翻转及跳跃
+
+2023.3.26：完成【第二章 Player 人物创建】
+
+学习：
+
+- UnityEvent事件系统
+- InputSystem
+- Animation 动画状态机

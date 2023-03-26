@@ -11,19 +11,24 @@ public class PlayerController : MonoBehaviour
     public Vector2 inputDirection;
     private Rigidbody2D rb;
     private CapsuleCollider2D coll;
+    public PlayerAnimation playerAnimation;
 
-    [Header("Basic Params")]
+    [Header("基本参数")]
     public float speed;
     public float jumpForce;
-    public bool isCrouch;
     private Vector2 originalOffset;
     private Vector2 originalSize;
 
+    [Header("状态")]
     public bool isHurt;
     public float hurtForce;
     public bool isDead;
+    public bool isAttack;
+    public bool isCrouch;
 
-
+    [Header("物理材质")] public PhysicsMaterial2D normal;
+    public PhysicsMaterial2D wall;
+    
     //Awake()->OnEnable()->Start()
     private void Awake()
     {
@@ -31,11 +36,16 @@ public class PlayerController : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
         inputControl = new PlayerInputControl();
         coll = GetComponent<CapsuleCollider2D>();
+        playerAnimation = GetComponent<PlayerAnimation>();
+        
         originalOffset = coll.offset;
         originalSize = coll.size;
 
-        // add jump function 
-        inputControl.GamePlay.Jump.started += jump;
+        // 注册Jump函数。当输入系统监测到Jump行为时，调用Jump函数
+        inputControl.GamePlay.Jump.started += Jump;
+        
+        // 注册PlayerAttack
+        inputControl.GamePlay.Attack.started += PlayerAttack;
     }
 
     private void OnEnable()
@@ -54,21 +64,16 @@ public class PlayerController : MonoBehaviour
     //     Debug.Log(other.name);
     // }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
         inputDirection = inputControl.GamePlay.Move.ReadValue<Vector2>();
+        CheckState();
     }
 
     public void FixedUpdate()
     {
-        if(!isHurt) Move();
+        if(!isHurt && !isAttack) Move();
     }
 
     public void Move()
@@ -96,10 +101,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void jump(InputAction.CallbackContext obj)
+    private void Jump(InputAction.CallbackContext obj)
     {
         if (physicsCheck.isGround)
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    private void PlayerAttack(InputAction.CallbackContext obj)
+    {
+        playerAnimation.PlayAttack();
+        isAttack = true;
     }
 
     public void GetHurt(Transform attacker)
@@ -115,5 +126,10 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
         inputControl.GamePlay.Disable();
+    }
+
+    public void CheckState()
+    {
+        coll.sharedMaterial = physicsCheck.isGround ? normal : wall;
     }
 }

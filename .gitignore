@@ -40,5 +40,5 @@ sysinfo.txt
 *.unitypackage
 .plastic/
 .idea/
-
+.DS_Store
 

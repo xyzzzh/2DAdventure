@@ -6,7 +6,8 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public PlayerStateBar playerStateBar;
-    [Header("事件监听")] public CharacterEventSO healthEvent;
+    [Header("事件监听")] 
+    public CharacterEventSO healthEvent;
 
     private void OnEnable()
     {

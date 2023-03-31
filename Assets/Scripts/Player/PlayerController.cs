@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("基本参数")]
     public float speed;
     public float jumpForce;
+    public float wallJumpForce;
     private Vector2 originalOffset;
     private Vector2 originalSize;
 
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
     public bool isDead;
     public bool isAttack;
     public bool isCrouch;
+    public bool wallJump;
 
     [Header("物理材质")] public PhysicsMaterial2D normal;
     public PhysicsMaterial2D wall;
@@ -78,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        if(!isCrouch)
+        if(!isCrouch && !wallJump)
             rb.velocity = new Vector2(inputDirection.x * speed * Time.deltaTime, rb.velocity.y);
 
         int faceDir = (int)transform.localScale.x;
@@ -104,7 +106,15 @@ public class PlayerController : MonoBehaviour
     private void Jump(InputAction.CallbackContext obj)
     {
         if (physicsCheck.isGround)
+        {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+        }
+        else if (physicsCheck.onWall && !wallJump)
+        {
+            rb.AddForce(new Vector2(-inputDirection.x, 2.5f) * wallJumpForce, ForceMode2D.Impulse);
+            wallJump = true;
+        }
+            
     }
 
     private void PlayerAttack(InputAction.CallbackContext obj)
@@ -133,5 +143,16 @@ public class PlayerController : MonoBehaviour
     public void CheckState()
     {
         coll.sharedMaterial = physicsCheck.isGround ? normal : wall;
+        if (physicsCheck.onWall)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
+
+        if (wallJump && rb.velocity.y < 0)
+            wallJump = false;
     }
 }

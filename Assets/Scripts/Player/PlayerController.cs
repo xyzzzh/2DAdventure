@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private CapsuleCollider2D coll;
     public PlayerAnimation playerAnimation;
+    public Character character;
 
     [Header("基本参数")]
     public float speed;
@@ -19,6 +20,9 @@ public class PlayerController : MonoBehaviour
     public float wallJumpForce;
     private Vector2 originalOffset;
     private Vector2 originalSize;
+    public float slideDistance;
+    public float slideSpeed;
+    public int slidePowerCost;
 
     [Header("状态")]
     public bool isHurt;
@@ -27,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool isAttack;
     public bool isCrouch;
     public bool wallJump;
+    public bool isSlide;
 
     [Header("物理材质")] public PhysicsMaterial2D normal;
     public PhysicsMaterial2D wall;
@@ -39,6 +44,7 @@ public class PlayerController : MonoBehaviour
         inputControl = new PlayerInputControl();
         coll = GetComponent<CapsuleCollider2D>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        character = GetComponent<Character>();
         
         originalOffset = coll.offset;
         originalSize = coll.size;
@@ -48,6 +54,9 @@ public class PlayerController : MonoBehaviour
         
         // 注册PlayerAttack
         inputControl.GamePlay.Attack.started += PlayerAttack;
+        
+        // 注册PlayerSlide
+        inputControl.GamePlay.Slide.started += Slide;
     }
 
     private void OnEnable()
@@ -108,6 +117,9 @@ public class PlayerController : MonoBehaviour
         if (physicsCheck.isGround)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            // 打断slide协程
+            isSlide = false;
+            StopAllCoroutines();
         }
         else if (physicsCheck.onWall && !wallJump)
         {
@@ -123,6 +135,49 @@ public class PlayerController : MonoBehaviour
         
         playerAnimation.PlayAttack();
         isAttack = true;
+    }
+    
+    private void Slide(InputAction.CallbackContext obj)
+    {
+        if (!isSlide && physicsCheck.isGround && character.currentPower >= slidePowerCost)
+        {
+            isSlide = true;
+            var targetPos = new Vector3(transform.position.x + transform.localScale.x * slideDistance,
+                transform.position.y);
+            // 更改player的层数，以实现slide过程中无伤的效果
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
+            StartCoroutine(TriggerSlide(targetPos));
+            character.OnSlide(slidePowerCost);
+        }
+    }
+
+    private IEnumerator TriggerSlide(Vector3 target)
+    {
+        do
+        {
+            // 暂停一帧
+            yield return null;
+            if (!physicsCheck.isGround)
+                break;
+                // 暂停协程
+                // yield break;
+                
+
+            //滑铲过程中撞墙
+            if (physicsCheck.touchLeftWall && transform.localScale.x < 0f ||
+                physicsCheck.touchRightWall && transform.localScale.x > 0f)
+            {
+                isSlide = false;
+                // 暂停循环
+                break;
+            }
+
+            rb.MovePosition(new Vector2(transform.position.x + transform.localScale.x * slideSpeed,
+                transform.position.y));
+        } while (MathF.Abs(target.x - transform.position.x) > 0.2f);
+
+        isSlide = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     public void GetHurt(Transform attacker)
@@ -154,5 +209,10 @@ public class PlayerController : MonoBehaviour
 
         if (wallJump && rb.velocity.y < 0)
             wallJump = false;
+        
+        if (isDead || isSlide)
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
+        else
+            gameObject.layer = LayerMask.NameToLayer("Player");
     }
 }

@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         physicsCheck = GetComponent<PhysicsCheck>();
 
         currSpeed = normalSpeed;
-        waitTimeCounter = waitTime;
+        // waitTimeCounter = waitTime;
     }
 
     private void OnEnable()

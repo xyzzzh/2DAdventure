@@ -11,6 +11,7 @@ public class Sign : MonoBehaviour
     private PlayerInputControl playerInput;
     public GameObject signSprite;
     public Transform playerTrans;
+    public IInteractable targetItem;
     private bool canPress;
 
     private void Awake()
@@ -23,6 +24,7 @@ public class Sign : MonoBehaviour
     private void OnEnable()
     {
         InputSystem.onActionChange += actionChange;
+        playerInput.GamePlay.Confirm.started += OnConfirm;
     }
 
     private void Update()
@@ -43,11 +45,21 @@ public class Sign : MonoBehaviour
         // }
     }
     
+    private void OnConfirm(InputAction.CallbackContext obj)
+    {
+        if (canPress)
+        {
+            targetItem.TriggerAction();
+            GetComponent<AudioDefination>()?.PlayAudioClip();
+        }
+    }
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Interactable"))
         {
             canPress = true;
+            targetItem = other.GetComponent<IInteractable>();
         }
     }
 

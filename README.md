@@ -17,3 +17,25 @@ UnityEvent实现流程
 > 3. 创建负责control的c#，挂载到触发Event的GameObject上
 > 4. 在control.cs中编写触发广播(RaisedEvent)的逻辑代码
 > 5. 在负责监听的C#编写监听Event及监听后执行逻辑的代码(OnEnable中注册方法等)
+
+interface 接口
+
+```csharp
+// IInteractable.cs
+public interface IInteractable
+{
+    // 接口：仅声明，无具体实现
+    void TriggerAction();
+}
+
+// Chest.cs
+// 继承类后逗号添加接口，需要具体实现接口内方法
+public class Chest : MonoBehaviour, IInteractable
+{
+    public void TriggerAction()
+    {
+        // throw new System.NotImplementedException();
+    }
+}
+```
+

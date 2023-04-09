@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
         if (physicsCheck.isGround)
         {
             rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            GetComponent<AudioDefination>()?.PlayAudioClip();
             // 打断slide协程
             isSlide = false;
             StopAllCoroutines();
@@ -125,6 +126,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(new Vector2(-inputDirection.x, 2.5f) * wallJumpForce, ForceMode2D.Impulse);
             wallJump = true;
+            GetComponent<AudioDefination>()?.PlayAudioClip();
         }
             
     }

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour, IInteractable
 {
-    public Vector3 positionToGO;
+    public SceneLoadEventSO loadEventSO;
+    public GameSceneSO sceneToGo;
+    public Vector3 positionToGo;
     
     public void TriggerAction()
     {
-        Debug.Log("传送！");
-        
+        loadEventSO.RaiseLoadRequestEvent(sceneToGo, positionToGo, true);
     }
 }

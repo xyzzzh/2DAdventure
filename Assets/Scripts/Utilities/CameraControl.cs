@@ -9,6 +9,7 @@ public class CameraControl : MonoBehaviour
     public CinemachineConfiner2D confiner2D;
     public CinemachineImpulseSource impulseSource;
     public VoidEventSO cameraShakEvent;
+    public VoidEventSO afterSceneLoadedEvent;// 监听广播
 
     private void Awake()
     {
@@ -18,14 +19,16 @@ public class CameraControl : MonoBehaviour
     private void OnEnable()
     {
         cameraShakEvent.OnEventRaised += OnCameraShakeEvent;
+        afterSceneLoadedEvent.OnEventRaised += OnAfterSceneLoadedEvent;
     }
-    
+
     private void OnDisable()
     {
         cameraShakEvent.OnEventRaised -= OnCameraShakeEvent;
+        afterSceneLoadedEvent.OnEventRaised -= OnAfterSceneLoadedEvent;
     }
-
-    private void Start()
+    
+    private void OnAfterSceneLoadedEvent()
     {
         GetNewCameraBounds();
     }

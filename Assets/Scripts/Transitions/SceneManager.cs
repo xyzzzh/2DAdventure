@@ -15,7 +15,8 @@ public class SceneManager : MonoBehaviour
     [Header("事件监听")]
     public SceneLoadEventSO loadEventSO;//本cs负责事件的监听
 
-    [Header("广播")] public VoidEventSO afterSceneLoadEvent;
+    [Header("事件广播")] public VoidEventSO afterSceneLoadEvent;
+    public FadeEventSO fadeEvent;
     public GameSceneSO currentLoadedScene;
     public GameSceneSO firstLoadScene;
 
@@ -75,7 +76,7 @@ public class SceneManager : MonoBehaviour
     {
         if (isFadeScreen)
         {
-            // TODO:实现渐入渐出
+            fadeEvent.FadeIn(fadeDuration);
         }
 
         yield return new WaitForSeconds(fadeDuration);
@@ -102,8 +103,7 @@ public class SceneManager : MonoBehaviour
         playerTrans.gameObject.SetActive(true);
         if (isFadeScreen)
         {
-            // TODO: 渐入渐出
-            
+            fadeEvent.FadeOut(fadeDuration);
         }
 
         isLoading = false;

@@ -51,7 +51,8 @@ public class SceneManager : MonoBehaviour
     private void NewGame()
     {
         sceneToLoad = firstLoadScene;
-        OnLoadRequestEvent(sceneToLoad, firstPosition, true);
+        // OnLoadRequestEvent(sceneToLoad, firstPosition, true);
+        loadEventSO.LoadRequestEvent(sceneToLoad, firstPosition, true);
     }
 
     private void OnLoadRequestEvent(GameSceneSO arg0, Vector3 arg1, bool arg2)
@@ -107,8 +108,11 @@ public class SceneManager : MonoBehaviour
         }
 
         isLoading = false;
-        
-        // 完成场景加载后进行广播
-        afterSceneLoadEvent.RaisedEvent();
+
+        if (currentLoadedScene.sceneType == SceneType.Location)
+        {
+            // 完成场景加载后进行广播
+            afterSceneLoadEvent.RaisedEvent();
+        }
     }
 }

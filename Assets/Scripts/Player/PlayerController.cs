@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("监听事件")] public SceneLoadEventSO loadEvent;
+    public VoidEventSO afterSceneLoadedEvent;
     public PlayerInputControl inputControl;
     public PhysicsCheck physicsCheck;
     public Vector2 inputDirection;
@@ -62,11 +64,25 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         inputControl.Enable();
+        loadEvent.LoadRequestEvent += OnLoadEvent;
+        afterSceneLoadedEvent.OnEventRaised += OnAfterSceneLoadedEvent;
     }
 
     private void OnDisable()
     {
         inputControl.Disable();
+        loadEvent.LoadRequestEvent -= OnLoadEvent;
+        afterSceneLoadedEvent.OnEventRaised -= OnAfterSceneLoadedEvent;
+    }
+
+    private void OnLoadEvent(GameSceneSO arg0, Vector3 arg1, bool arg2)
+    {
+        inputControl.GamePlay.Disable();
+    }
+    
+    private void OnAfterSceneLoadedEvent()
+    {
+        inputControl.GamePlay.Enable();
     }
 
     // 测试

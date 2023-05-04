@@ -512,7 +512,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5899997, y: -0.11000031, z: -10}
+  m_LocalPosition: {x: -11.009999, y: 0.009999692, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -790,7 +790,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1033855981}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.59, y: -0.93, z: 0}
+  m_LocalPosition: {x: -11.01, y: -0.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -963,6 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dceae4c085a274f10944bd24446356b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  newGameEvent: {fileID: 11400000, guid: d691157f6562f4a489072cc8c70a1389, type: 2}
   maxHealth: 100
   currHealth: 0
   maxPower: 15
@@ -2163,7 +2164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548348727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.5899997, y: -0.11000031, z: -10}
+  m_LocalPosition: {x: -11.009999, y: 0.009999692, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2806,12 +2807,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTrans: {fileID: 1033855983}
-  firstPosition: {x: -6.59, y: -0.93, z: 0}
+  firstPosition: {x: -11.01, y: -0.81, z: 0}
+  menuPosition: {x: -6.59, y: -0.93, z: 0}
   loadEventSO: {fileID: 11400000, guid: 082a25082e18faa4b983bb6ea3209b6f, type: 2}
+  newGameEvent: {fileID: 11400000, guid: d691157f6562f4a489072cc8c70a1389, type: 2}
   afterSceneLoadEvent: {fileID: 11400000, guid: 606bf6a4c25be4deb944ef6ce0ff5b02, type: 2}
   fadeEvent: {fileID: 11400000, guid: 672578ed554068a45a6dc0eeb666a930, type: 2}
   currentLoadedScene: {fileID: 0}
-  firstLoadScene: {fileID: 11400000, guid: eff10f10e446343fba07ddd6577bd5f4, type: 2}
+  firstLoadScene: {fileID: 11400000, guid: fabafc6dcd0990949bb073122164af40, type: 2}
+  menuScene: {fileID: 11400000, guid: eff10f10e446343fba07ddd6577bd5f4, type: 2}
   fadeDuration: 0.5
 --- !u!4 &1957068925
 Transform:

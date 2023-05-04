@@ -12,13 +12,19 @@ public class SceneManager : MonoBehaviour
 
     public Transform playerTrans;
     public Vector3 firstPosition;
+    public Vector3 menuPosition; // 菜单状态下主角坐标
     [Header("事件监听")]
     public SceneLoadEventSO loadEventSO;//本cs负责事件的监听
+    public VoidEventSO newGameEvent;
 
     [Header("事件广播")] public VoidEventSO afterSceneLoadEvent;
     public FadeEventSO fadeEvent;
     public GameSceneSO currentLoadedScene;
+    
+    [Header("场景")]
     public GameSceneSO firstLoadScene;
+    public GameSceneSO menuScene;
+
 
     private GameSceneSO sceneToLoad;
     private Vector3 posToGo;
@@ -31,21 +37,25 @@ public class SceneManager : MonoBehaviour
         // Addressables.LoadSceneAsync(firstLoadScene.sceneReference, LoadSceneMode.Additive);
         // currentLoadedScene = firstLoadScene;
         // firstLoadScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+        
     }
 
     private void Start()
     {
-        NewGame();
+        // NewGame();
+        loadEventSO.LoadRequestEvent(menuScene, menuPosition, true);
     }
 
     private void OnEnable()
     {
         loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
+        newGameEvent.OnEventRaised += NewGame;
     }
 
     private void OnDisable()
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
+        newGameEvent.OnEventRaised -= NewGame;
     }
 
     private void NewGame()

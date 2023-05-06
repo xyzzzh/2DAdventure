@@ -20,6 +20,7 @@ public class SceneManager : MonoBehaviour
     [Header("事件广播")] public VoidEventSO afterSceneLoadEvent;
     public FadeEventSO fadeEvent;
     public GameSceneSO currentLoadedScene;
+    public SceneLoadEventSO sceneUnlodedEvent;
     
     [Header("场景")]
     public GameSceneSO firstLoadScene;
@@ -91,6 +92,9 @@ public class SceneManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(fadeDuration);
+
+        // 广播事件，显示人物状态条
+        sceneUnlodedEvent.RaiseLoadRequestEvent(sceneToLoad, posToGo, true);
 
         // 等待场景卸载结束再继续执行
         yield return currentLoadedScene.sceneReference.UnLoadScene();

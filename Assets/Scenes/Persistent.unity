@@ -433,7 +433,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -770,7 +770,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -296362327
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -239224881, guid: 57dbdc721f3a0422798f51874fa3f2c6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1158,7 +1158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1111032051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,7 +1843,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1490210307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2368,7 +2368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStateBar: {fileID: 1490210308}
   healthEvent: {fileID: 11400000, guid: 19b4eed3ff9064cc288477f7c4d52101, type: 2}
-  loadEvent: {fileID: 11400000, guid: 082a25082e18faa4b983bb6ea3209b6f, type: 2}
+  loadEvent: {fileID: 11400000, guid: f1cce93279da6440aac702b9850753d5, type: 2}
 --- !u!1 &1629859748
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,6 +2814,7 @@ MonoBehaviour:
   afterSceneLoadEvent: {fileID: 11400000, guid: 606bf6a4c25be4deb944ef6ce0ff5b02, type: 2}
   fadeEvent: {fileID: 11400000, guid: 672578ed554068a45a6dc0eeb666a930, type: 2}
   currentLoadedScene: {fileID: 0}
+  sceneUnlodedEvent: {fileID: 11400000, guid: f1cce93279da6440aac702b9850753d5, type: 2}
   firstLoadScene: {fileID: 11400000, guid: fabafc6dcd0990949bb073122164af40, type: 2}
   menuScene: {fileID: 11400000, guid: eff10f10e446343fba07ddd6577bd5f4, type: 2}
   fadeDuration: 0.5
